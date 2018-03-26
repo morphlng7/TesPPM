@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel=stylesheet href=jmobile/jquery.mobile.external-png-1.4.5.css>
+	<script src=jmobile/demos/js/jquery.js></script>
+	<script src=jmobile/jquery.mobile-1.4.5.js></script>
+</head>
+<script>
+	
+    $(function(){
+      // bind change event to select
+      $('.dynamic_select').on('change', function () {
+          var url = $(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    });
+$(function () {
+       $( "#numberBox" ).change(function() {
+          var max = parseInt($(this).attr('max'));
+          var min = parseInt($(this).attr('min'));
+          if ($(this).val() > max)
+          {
+              $(this).val(max);
+          }
+          else if ($(this).val() < min)
+          {
+              $(this).val(min);
+          }       
+        }); 
+    });
+function dec2bin(dec){
+    return (dec >>> 0).toString(2);
+}
+
+$(function () {
+       $( "#numberBox" ).change(function() {
+       	  var number = $(this).val();
+          var binary = dec2bin(number);
+          var hexa = parseInt(number).toString(16);
+          $( "#biner" ).html(binary);
+          $( "#hexad" ).html(hexa);
+        }); 
+    });
+$(function () {
+       $( "#btnRGB" ).click(function() {
+       	  var red = $("#rgb1").val();
+          var green = $("#rgb2").val();
+          var blue = $("#rgb3").val();
+          var check = 1;
+          if ( red.length != 2 || green.length != 2 || blue.length != 2)
+          {
+          	check = 0;
+          }
+          else
+          {
+          		if ( /^[a-zA-Z0-9]*$/.test(red) == false || /^[a-zA-Z0-9]*$/.test(green) == false || /^[a-zA-Z0-9]*$/.test(blue) == false )
+          		{
+          			check = 0;
+          		}
+          }
+  		  var red2 = parseInt(red, 16);
+  		  var green2 = parseInt(green, 16);
+  		  var blue2 = parseInt(blue, 16);
+  		  if ( check == 0)
+  		  {
+  		  	alert("Invalid Input, Mohon Input Ulang");
+  		  }
+  		  else
+  		  {
+  		  	$("#dummy").css({"background-color": "rgb(" + red2 + "," + green2 + "," + blue2 + ")"});
+  		  }
+        }); 
+    });
+</script>
+<body>
+
+<div data-role=page id=menu>
+	<div data-role=content>
+		<center> Selamat Datang di Web Ini. Mohon Pilih Halaman Yang Anda Inginkan Melalui ComboBox Di Bawah</center>
+		<br>
+		<br>
+		<form>
+			<div class="ui-field-contain">
+			    <label for="select-native-1">Pilih Halaman :</label>
+			    <select name="select-native-1" class="dynamic_select">
+			    	<option value="#">Pilih 1 halaman dibawah ini</option>
+			        <option value="#one" >Halaman Pertama (Calculator)</option>
+			        <option value="#two">Halaman Kedua (Warna RGB)</option>
+			        <option value="#three">Halaman Ketiga (Rangkuman)</option>
+			    </select>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div data-role=page id=one>
+	<div data-role=content>
+		<center> Halaman 1 : Calculator </center>
+		<br>
+		<br>
+		<form>
+			<div class="ui-field-contain">
+			    <label for="select-native-1">Pilih Halaman :</label>
+			    <select name="select-native-1" class="dynamic_select">
+			    	<option value="#">Pilih 1 halaman dibawah ini</option>
+			        <option value="#menu">Halaman Menu (Back To Menu)</option></a>
+			        <option value="#two">Halaman Kedua (Warna RGB)</option>
+			        <option value="#three">Halaman Ketiga (Rangkuman)</option>
+			    </select>
+			</div>
+		</form>
+		<form>
+		    <label for="number-1">Input Bilangan Decimal Pada Inputan Dibawah Ini</label>
+		    <input type="number" data-clear-btn="false" name="number-1" id="numberBox" max=999999 min=0 value="">
+		 </form>
+		<br>
+		Biner nya = <div id="biner"></div>
+		<br>
+		HexaDecimal nya = <div id="hexad"></div>
+	</div>
+
+</div>
+
+<div data-role=page id=two>
+	<div data-role=content>
+		<center> Halaman 2 : Warna RGB </center>
+		<br>
+		<br>
+		<form>
+			<div class="ui-field-contain">
+			    <label for="select-native-1">Pilih Halaman :</label>
+			    <select name="select-native-1" class="dynamic_select">
+			    	<option value="#">Pilih 1 halaman dibawah ini</option>
+			        <option value="#menu">Halaman Menu (Back To Menu)</option></a>
+			        <option value="#one">Halaman Pertama (Calculator)</option>
+			        <option value="#three">Halaman Ketiga (Rangkuman)</option>
+			    </select>
+			</div>
+		</form>
+		<form>
+     <label for="text-1">Input Kode Warna MERAH (2 huruf / angka , hexadecimal tanpa '#')</label>
+     <input type="text" name="text-1" id="rgb1" value="" pattern="[A-Za-z0-9]">
+     <label for="text-1">Input Kode Warna HIJAU (2 huruf / angka , hexadecimal tanpa '#')</label>
+     <input type="text" name="text-1" id="rgb2" value="" pattern="[A-Za-z0-9]">
+     <label for="text-1">Input Kode Warna BIRU (2 huruf / angka , hexadecimal tanpa '#')</label>
+     <input type="text" name="text-1" id="rgb3" value="" pattern="[A-Za-z0-9]">
+     <input type="Button" value="Cek Warna" id="btnRGB">
+     <input type="text" id="dummy">
+ 		</form>
+	</div>
+
+</div>
+
+<div data-role=page id=three>
+	<div data-role=content>
+		<center> Halaman 3 : Rangkuman </center>
+		<br>
+		<br>
+		<form>
+			<div class="ui-field-contain">
+			    <label for="select-native-1">Pilih Halaman :</label>
+			    <select name="select-native-1" class="dynamic_select">
+			    	<option value="#">Pilih 1 halaman dibawah ini</option>
+			        <option value="#menu">Halaman Menu (Back to Menu)</option></a>
+			        <option value="#one">Halaman Pertama (Calculator)</option>
+			        <option value="#two">Halaman Kedua (Warna RGB)</option>
+			    </select>
+			</div>
+		</form>
+		
+	</div>
+
+</div>
+
+</body>
+
+</html>
