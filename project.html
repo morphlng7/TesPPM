@@ -76,7 +76,72 @@ $(function () {
   		  }
         }); 
     });
+$( document ).on( "click", ".show-page-loading-msg", function() {
+    var $this = $( this ),
+        theme = $this.jqmData( "theme" ) || $.mobile.loader.prototype.options.theme,
+        msgText = $this.jqmData( "msgtext" ) || $.mobile.loader.prototype.options.text,
+        textVisible = $this.jqmData( "textvisible" ) || $.mobile.loader.prototype.options.textVisible,
+        textonly = !!$this.jqmData( "textonly" );
+        html = $this.jqmData( "html" ) || "";
+    $.mobile.loading( "show", {
+            text: msgText,
+            textVisible: textVisible,
+            theme: theme,
+            textonly: textonly,
+            html: html
+    });
+})
+.on( "click", ".hide-page-loading-msg", function() {
+    $.mobile.loading( "hide" );
+});
 </script>
+<style>
+@media all and (max-width: 50em) {
+	.my-breakpoint .ui-block-a, 
+	.my-breakpoint .ui-block-b, 
+	.my-breakpoint .ui-block-c,
+	.my-breakpoint .ui-block-d,
+	.my-breakpoint .ui-block-e { 
+		width: 100%; 
+		float:none; 
+	}
+}
+@media ( min-width: 35em ) {
+
+	/* wrap on wide viewports once open */
+
+	.ui-panel-page-content-open.ui-panel-page-content-position-left {
+		margin-right: 17em;
+	}
+	.ui-panel-page-content-open.ui-panel-page-content-position-right {
+		margin-left: 17em;
+	}
+	.ui-panel-page-content-open {
+		width: auto;
+	}
+
+	/* disable "dismiss" on wide viewports */
+	.ui-panel-dismiss {
+		display: none;
+	}
+
+	/* same as the above but for panels with display mode "push" only */
+
+	.ui-panel-page-content-open.ui-panel-page-content-position-left.ui-panel-page-content-display-push {
+		margin-right: 17em;
+	}
+	.ui-panel-page-content-open.ui-panel-page-content-position-right.ui-panel-page-content-display-push {
+		margin-left: 17em;
+	}
+	.ui-panel-page-content-open.ui-panel-page-content-display-push {
+		width: auto;
+	}
+
+	.ui-panel-dismiss-display-push {
+		display: none;
+	}
+}
+</style>
 <body>
 
 <div data-role=page id=menu>
@@ -115,8 +180,8 @@ $(function () {
 			</div>
 		</form>
 		<form>
-		    <label for="number-1">Input Bilangan Decimal Pada Inputan Dibawah Ini</label>
-		    <input type="number" data-clear-btn="false" name="number-1" id="numberBox" max=999999 min=0 value="">
+		    <label for="number-1">Input Bilangan Decimal Pada Inputan Dibawah Ini (Biner dan HexaDecimal akan tampil setiap kali nilai dari inputan berubah)</label>
+		    <input type="number" data-clear-btn="false" name="number-1" id="numberBox" max=99999999 min=0 value="">
 		 </form>
 		<br>
 		Biner nya = <div id="biner"></div>
@@ -158,7 +223,7 @@ $(function () {
 
 <div data-role=page id=three>
 	<div data-role=content>
-		<center> Halaman 3 : Rangkuman </center>
+		<center> Halaman 3 : Rangkuman Materi </center>
 		<br>
 		<br>
 		<form>
@@ -166,13 +231,80 @@ $(function () {
 			    <label for="select-native-1">Pilih Halaman :</label>
 			    <select name="select-native-1" class="dynamic_select">
 			    	<option value="#">Pilih 1 halaman dibawah ini</option>
-			        <option value="#menu">Halaman Menu (Back to Menu)</option></a>
+			        <option value="#menu">Halaman Menu (Back to Menu)</option>
 			        <option value="#one">Halaman Pertama (Calculator)</option>
 			        <option value="#two">Halaman Kedua (Warna RGB)</option>
 			    </select>
 			</div>
 		</form>
-		
+		<br>
+		<br>
+		<center>
+			Ada banyak hal yang sudah dipelajari di Pemrograman Perangkat Mobile. Mulai dari hari pertama masuk mengenai pengenalan mata kuliah PPM, 
+			sejarah teknologi dan handphone, kemudian mempelajari Github beserta command - command Git dan GUI nya , lalu masuk ke dalam JQuery Mobile beserta
+			fitur - fitur apa saja yang bisa dibuat menggunakan JQuery Mobile, hingga sampai sejauh ini sampai belajar mengenai AngularJS.
+			<br>
+			<br>
+			Untuk pembelajaran mengenai Github, Github adalah salah satu tempat dimana kita bisa mengupload project dan menyimpan project kita di server yang telah disediakan. Dari Project yang sudah kita upload ini ada banyak hal yang bisa dilakukan terutama untuk bisa diupdate oleh kita maupun orang luar (semacam kita berkolaborasi untuk bisa membuat program kita menjadi lebih baik lagi). 
+			<br>
+			<br>
+			Mengenai penggunaan Github beserta fitur - fiturnya, kita perlu belajar banyak command yang nantinya kita masukkan melalui GitBash yang diinstal ke komputer kita (bila tidak mau melalui command CLI, bisa juga menggunakan GUI yang tersedia dari berbagai pihak). Berikut adalah beberapa command dasar yang ada :
+		</center>
+		<br>
+		<ul data-role=listview>
+			<li>Git Init : Perintah untuk membuat repository local di komputer kita (umumnya di folder yang kita pilih). Dari repository kita ini nanti bisa melakukan banyak hal</li>
+			<li>Git Add : Memasukkan suatu file ke dalam staging area. Staging area adalah suatu keadaan dimana file dipersiapkan untuk di commit. Selama di staging area , file bisa saja di edit (diganti dengan versi staged yang lain, dikeluarkan dari staged area , dll)</li>
+			<li>Git Commit -m "message" : Untuk mengcommit / mengkonfirmasi suatu perubahan yang akan dimasukkan ke dalam repository. Biasanya disertai dengan message yang memberi tahu ini commit untuk melakukan apa.</li>
+			<li>Git Remote add origin https://github.com/morphlng7/TesPPM : Untuk menambahkan suatu repository bernama origin yang lokasi repositorynya berada di server github (dalam contoh ini menggunakan repository dari github saya sendiri)</li>
+			<li>Git Push origin master : Untuk mengepush / upload semua file yang ada di repository kita(master) ke repositroy lain (dalam hal ini origin yang ada di server github)</li>
+			<li>Git Pull origin master : Untuk mengepull / download semua file yang ada di repository di server ke local kita</li>
+		</ul>
+		<br>
+		<br>
+		<center>
+			Berikutnya adalah mengenai JQuery Mobile. JQuery Mobile merupakan JQuery yang sudah dibuat sedemikian rupa untuk memudahkan kita dalam membuat halaman jquery yang responsif untuk perangkat mobile. Berikut adalah beberapa contoh dari fitur yang disediakan di JQuery Mobile :
+			<br>
+			<br>
+			<b> Responsive Grid </b>
+			<br>
+			<div class="ui-grid-b ui-reponsive">
+				<div class="ui-block-a">Block A</div>
+				<div class="ui-block-b">Block B</div>
+				<div class="ui-block-c">Block C</div>
+			</div>
+			<br>
+			<br>
+			<label for="slider-1"><b>Slider :</b></label>
+			<input type="range" name="slider-1" id="slider-1" value="60" min="0" max="100">
+			<br>
+			<br>
+			<b>Loader</b>
+			<br>
+			<button class="show-page-loading-msg" data-textonly="false" data-textvisible="true" data-msgtext="" data-inline="true">Trying to Load</button>
+			<button class="hide-page-loading-msg" data-inline="true" data-icon="delete">Hide Loading Icon</button>
+			<br>
+			<br>
+			<b>Panel :</b>
+			<div data-role="panel" id="mypanel" data-display="overlay">
+				<br>
+			    Welcome To The Panel. Ini adalah contoh bagaimana panel dalam JQuery Mobile Bekerja.
+			    <br>
+			    <a href="#three" data-rel="close">Close panel</a>
+			</div><!-- /panel -->
+			<a href="#mypanel">Open Panel Here</a>
+			<br>
+			<br>
+			<b> ListView </b>
+			<br>
+			<br>
+			<ul data-role=listview>
+				<li> Repsonsive Grid : Untuk membuat grid (semacam tata letak dalam bentuk tabel) yang bisa responsive </li>
+				<li> Slider : Untuk Bisa memilih nilai dalam range yang berada di range slider </li>
+				<li> Panel : Untuk membuat panel pada sisi kiri atau kanan dari layar yang bisa berisi content sesuai keinginan kita </li>
+				<li> Loader : Untuk membuat lambang / icon loading </li>
+				<li> ListView : Untuk membuat semacam list (seperti table) seperti yang digunakan pada bagian ini dan penjelasan command git</li>
+			</ul>
+		</center>
 	</div>
 
 </div>
